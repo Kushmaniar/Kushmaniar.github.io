@@ -4,6 +4,8 @@
 @import "../components/sites/www-mikes-cv-de975993/shared/mikes-cv.css";
 
 @custom-variant dark (&:is(.dark *));
+/* Plain :hover (Tailwind v4 defaults to @media (hover: hover)); the original site uses bare :hover rules. */
+@custom-variant hover (&:hover);
 
 @theme inline {
   --color-background: var(--background);
