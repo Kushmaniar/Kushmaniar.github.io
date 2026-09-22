@@ -1,14 +1,15 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
+@import "../components/sites/www-mikes-cv-de975993/shared/mikes-cv.css";
 
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: "Geist", "Geist Fallback", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "Geist Mono", "Geist Mono Fallback", ui-monospace, monospace;
+  --font-sans: var(--folio-sans);
+  --font-mono: var(--folio-mono);
   --font-heading: var(--font-sans);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
@@ -46,75 +47,149 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+
+  /* mikes.cv tokens — utilities like text-folio-ink, bg-surface-hover, font-folio-mono */
+  --font-folio-sans: var(--folio-sans);
+  --font-folio-mono: var(--folio-mono);
+  --font-folio-lcd: var(--folio-lcd);
+  --color-folio-bg: var(--folio-bg);
+  --color-ink: var(--ink);
+  --color-faint: var(--faint);
+  --color-site-accent: var(--site-accent);
+  --color-folio-blue: var(--folio-blue);
+  --color-path-blue: var(--path-blue);
+  --color-folio-mute: var(--folio-mute);
+  --color-folio-ink: var(--folio-ink);
+  --color-folio-body: var(--folio-body);
+  --color-folio-rule: var(--folio-rule);
+  --color-surface-card: var(--surface-card);
+  --color-surface-sunken: var(--surface-sunken);
+  --color-surface-hover: var(--surface-hover);
+  --color-surface-chip: var(--surface-chip);
+  --color-ink-title: var(--ink-title);
+  --color-ink-desc: var(--ink-desc);
+  --color-ink-faint: var(--ink-faint);
+  --color-ink-faint-hover: var(--ink-faint-hover);
+  --color-ink-hint: var(--ink-hint);
+  --color-ink-link-hover: var(--ink-link-hover);
+  --color-keyline: var(--keyline);
+  --color-tl-route: var(--tl-route);
+  --ease-folio-out: var(--ease-out);
+  --ease-avatar-in: var(--avatar-ease-in);
+  --ease-avatar-out: var(--avatar-ease-out);
 }
 
+/* mikes.cv palette (light). `--site-accent` is the site's own `--accent`,
+   renamed so it cannot collide with shadcn's `--accent` token. */
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
+  --bg: var(--folio-bg);
+  --ink: #17160f;
+  --faint: #8c8b82;
+  --site-accent: #1e9e52;
+  --measure: 40rem;
+  --veil-light: #faf5f5;
+  --veil-dark: #191817;
+  --folio-bg: var(--veil-light);
+  --folio-sans: "MB Sans", system-ui, sans-serif;
+  --folio-mono: "MB Mono", ui-monospace, monospace;
+  --folio-lcd: "MB LCD", "MB Mono", ui-monospace, monospace;
+  --folio-blue: #3a53ed;
+  --path-blue-rgb: 44, 111, 255;
+  --path-blue: rgb(var(--path-blue-rgb));
+  --folio-mute: #9b9b9b;
+  --folio-ink: #060606;
+  --folio-body: #434445;
+  --folio-rule: #cbc9d6;
+  --surface-card: #fff;
+  --surface-sunken: #efeaea;
+  --surface-hover: rgba(23, 22, 15, 0.035);
+  --surface-chip: #f2f0f0;
+  --ink-title: #313030;
+  --ink-desc: #666;
+  --ink-faint: #989898;
+  --ink-faint-hover: #6c6c6c;
+  --ink-hint: #757575;
+  --ink-link-hover: #5c5b5b;
+  --keyline: #fff;
+  --tl-dot-line: #c3c1c1;
+  --tl-dot-fill: #b4b2b2;
+  --tl-dot-case: #a9a7ad;
+  --tl-route: #c2c0c0;
+  --shadow-rgb: 0, 0, 0;
+  --footer-tint-rgb: 255, 255, 255;
+  --folio-col-w: 560px;
+  --rail-x: -21.5px;
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --avatar-lift: -4px;
+  --avatar-dur: 0.32s;
+  --avatar-scale: 1.05;
+  --avatar-falloff: 0.45;
+  --avatar-ease-in: cubic-bezier(0.22, 1, 0.36, 1);
+  --avatar-ease-out: cubic-bezier(0.34, 3.85, 0.64, 1);
+  --tl-logo-size: 28px;
+
+  /* shadcn tokens mapped onto the site palette */
+  --background: var(--folio-bg);
+  --foreground: var(--ink);
+  --card: var(--surface-card);
+  --card-foreground: var(--ink);
+  --popover: var(--surface-card);
+  --popover-foreground: var(--ink);
+  --primary: var(--folio-blue);
+  --primary-foreground: #fff;
+  --secondary: var(--surface-chip);
+  --secondary-foreground: var(--folio-ink);
+  --muted: var(--surface-sunken);
+  --muted-foreground: var(--folio-mute);
+  --accent: var(--surface-chip);
+  --accent-foreground: var(--folio-ink);
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
+  --border: var(--folio-rule);
+  --input: var(--folio-rule);
+  --ring: var(--site-accent);
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
   --chart-3: oklch(0.439 0 0);
   --chart-4: oklch(0.371 0 0);
   --chart-5: oklch(0.269 0 0);
   --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --sidebar: var(--folio-bg);
+  --sidebar-foreground: var(--ink);
+  --sidebar-primary: var(--folio-blue);
+  --sidebar-primary-foreground: #fff;
+  --sidebar-accent: var(--surface-chip);
+  --sidebar-accent-foreground: var(--folio-ink);
+  --sidebar-border: var(--folio-rule);
+  --sidebar-ring: var(--site-accent);
 }
 
-.dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+/* Cabin lights off (window shade down) */
+:root[data-theme="dark"] {
+  --folio-bg: var(--veil-dark);
+  --ink: #f2efe9;
+  --faint: #6e6d66;
+  --site-accent: #35c56d;
+  --folio-blue: #2c6fff;
+  --folio-mute: #7d7c7c;
+  --folio-ink: #f5f3f0;
+  --folio-body: #b9b8b6;
+  --folio-rule: #39383f;
+  --surface-card: #242322;
+  --surface-sunken: #211f1f;
+  --surface-hover: rgba(255, 255, 255, 0.045);
+  --surface-chip: #2b2928;
+  --ink-title: #e8e6e3;
+  --ink-desc: #a3a2a0;
+  --ink-faint: #767575;
+  --ink-faint-hover: #9a9999;
+  --ink-hint: #8a8989;
+  --ink-link-hover: #d6d4d1;
+  --keyline: rgba(255, 255, 255, 0.14);
+  --tl-dot-line: #4a4848;
+  --tl-dot-fill: #565454;
+  --tl-dot-case: #5a585e;
+  --tl-route: #5e5c5c;
+  --footer-tint-rgb: 25, 24, 23;
 }
 
 @layer base {
@@ -122,9 +197,15 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--folio-sans);
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
   }
   html {
-    @apply font-sans;
+    -webkit-text-size-adjust: 100%;
   }
 }

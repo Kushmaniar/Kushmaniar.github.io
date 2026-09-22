@@ -1,0 +1,359 @@
+/*
+ * mikes.cv — site-scoped rules that Tailwind utilities can't express cleanly:
+ * font faces, keyframes, cross-component state classes (reveal, dots, path),
+ * and the theme recolour transition. Component styling itself lives in
+ * Tailwind utilities inside each component.
+ * Tokens (colours, easings) are declared in src/app/globals.css.
+ */
+
+@font-face {
+  font-family: "MB Sans";
+  src: url("/sites/www-mikes-cv-de975993/root-8a5edab2/fonts/mb-sans-400.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212,
+    U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "MB Sans";
+  src: url("/sites/www-mikes-cv-de975993/root-8a5edab2/fonts/mb-sans-500.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212,
+    U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "MB Mono";
+  src: url("/sites/www-mikes-cv-de975993/root-8a5edab2/fonts/mb-mono-400.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212,
+    U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "MB Mono";
+  src: url("/sites/www-mikes-cv-de975993/root-8a5edab2/fonts/mb-mono-500.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212,
+    U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "MB LCD";
+  src: url("/sites/www-mikes-cv-de975993/root-8a5edab2/fonts/ds-digital.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ---------- base (layered so component utilities override it) ---------- */
+
+@layer base {
+  a {
+    color: var(--ink);
+    text-decoration: underline;
+    text-decoration-color: var(--faint);
+    text-underline-offset: 3px;
+  }
+  a:hover {
+    text-decoration-color: var(--ink);
+  }
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible {
+    outline: 2px solid var(--site-accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+  ::selection {
+    background: var(--site-accent);
+    color: var(--bg);
+  }
+  img,
+  video,
+  canvas {
+    -webkit-touch-callout: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+}
+
+/* Everything below is intentionally unlayered: these are state overrides
+   (reveal, recolour, lit dots) that must win over component utilities. */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+html.is-covered,
+html.is-covered body {
+  overflow: hidden;
+}
+
+/* ---------- keyframes (use via animate-[name_…] utilities) ---------- */
+
+@keyframes itemReveal {
+  0% {
+    opacity: 0;
+    filter: blur(8px);
+    transform: translateY(-12px) scale(0.985);
+  }
+  to {
+    opacity: var(--reveal-opacity, 1);
+    filter: blur(0);
+    transform: translateY(0) scale(1);
+  }
+}
+@keyframes itemRevealReduced {
+  0% {
+    opacity: 0;
+  }
+  to {
+    opacity: var(--reveal-opacity, 1);
+  }
+}
+@keyframes dotPulse {
+  0% {
+    opacity: 0.45;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(var(--pulse-to, 2.4));
+  }
+}
+@keyframes memTipIn {
+  0% {
+    opacity: 0;
+    transform: translate(-50%) rotate(calc(var(--r) * -1)) translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%) rotate(calc(var(--r) * -1)) translateY(0);
+  }
+}
+@keyframes hint-shimmer {
+  0% {
+    background-position: 100% 0;
+  }
+  to {
+    background-position: 0% 0;
+  }
+}
+@keyframes splashMarkIn {
+  0% {
+    transform: scale(0.72);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* ---------- load reveal (root <main class="folio"> toggles .booting) ---------- */
+
+.reveal,
+.tl-entry {
+  animation: itemReveal 0.4s var(--ease-out) both;
+  animation-delay: var(--reveal-delay, 0ms);
+}
+.folio.booting .reveal,
+.folio.booting .tl-entry {
+  animation-play-state: paused;
+}
+.tl-entry:nth-child(1) { --reveal-delay: 0.12s; }
+.tl-entry:nth-child(2) { --reveal-delay: 0.18s; }
+.tl-entry:nth-child(3) { --reveal-delay: 0.24s; }
+.tl-entry:nth-child(4) { --reveal-delay: 0.3s; }
+.tl-entry:nth-child(5) { --reveal-delay: 0.36s; }
+.tl-entry:nth-child(6) { --reveal-delay: 0.42s; }
+.tl-entry:nth-child(7) { --reveal-delay: 0.48s; }
+.tl-entry:nth-child(8) { --reveal-delay: 0.54s; }
+.tl-entry:nth-child(n + 9) { --reveal-delay: 0.6s; }
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .tl-entry {
+    animation: itemRevealReduced 0.2s var(--ease-out) both;
+    animation-delay: 0ms;
+  }
+}
+
+/* ---------- theme recolour (html.is-recolouring for ~580ms) ---------- */
+
+.is-recolouring body,
+.is-recolouring .folio,
+.is-recolouring .folio *,
+.is-recolouring .folio *::before,
+.is-recolouring .folio *::after {
+  transition-property: color, fill, stroke;
+  transition-duration: 0.52s;
+  transition-timing-function: var(--ease-out);
+  transition-delay: 0ms;
+}
+.is-recolouring .folio-window,
+.is-recolouring .folio-window * {
+  transition: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .is-recolouring body,
+  .is-recolouring .folio,
+  .is-recolouring .folio *,
+  .is-recolouring .folio *::before,
+  .is-recolouring .folio *::after {
+    transition-duration: 0.2s;
+  }
+}
+
+/* ---------- timeline dots (FlightPath toggles .is-lit on every .tl-dot) ---------- */
+
+.tl-dot {
+  position: absolute;
+  left: calc(var(--rail-x) - var(--entry-indent));
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  z-index: 1;
+}
+.tl-dot-now,
+.tl-dot-past {
+  width: 13px;
+  height: 13px;
+  background: var(--folio-bg);
+  border: 1px solid var(--tl-dot-line);
+  transition: border-color 0.3s var(--ease-out);
+}
+.tl-dot-now::after,
+.tl-dot-past::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 6px;
+  height: 6px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: var(--tl-dot-fill);
+  transition: background-color 0.3s var(--ease-out);
+}
+.tl-dot-case {
+  width: 5px;
+  height: 5px;
+  background: var(--tl-dot-case);
+  --pulse-to: 3.6;
+  transition: background-color 0.3s var(--ease-out);
+}
+.tl-dot.is-lit {
+  border-color: var(--folio-blue);
+}
+.tl-dot.is-lit::after {
+  background: var(--folio-blue);
+}
+.tl-dot-case.is-lit {
+  background: var(--folio-blue);
+}
+.tl-dot::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 1px solid var(--folio-blue);
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  pointer-events: none;
+}
+.tl-dot.is-lit::before {
+  animation: dotPulse 0.72s var(--ease-out);
+}
+@media (prefers-reduced-motion: reduce) {
+  .tl-dot.is-lit::before {
+    animation: none;
+  }
+}
+
+/* ---------- flight path (FlightPath writes --curve-p / --rail-p) ---------- */
+
+.pc-dots {
+  stroke: var(--folio-rule);
+  stroke-width: 1;
+  stroke-dasharray: 2 3.5;
+  stroke-linecap: round;
+}
+.pc-lit {
+  stroke: var(--path-blue);
+  stroke-width: 1.25;
+  stroke-linecap: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: calc(1 - var(--curve-p, 0));
+  filter: drop-shadow(0 0 3px rgba(var(--path-blue-rgb), 0.2));
+}
+.path-rail {
+  position: absolute;
+  left: 0;
+  top: 110px;
+  bottom: 0;
+  width: 1px;
+  background-image: linear-gradient(to bottom, var(--folio-rule) 0 2px, transparent 2px 5.5px);
+  background-size: 1px 5.5px;
+}
+.path-lit {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: calc(var(--rail-p, 0) * 100%);
+  background: var(--path-blue);
+  box-shadow:
+    0 0 4px rgba(var(--path-blue-rgb), 0.2),
+    0 0 10px rgba(var(--path-blue-rgb), 0.2),
+    0 0 20px rgba(var(--path-blue-rgb), 0.14);
+  opacity: min(1, calc(var(--rail-p, 0) * 60));
+}
+.path-lit::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 5px;
+  height: 5px;
+  margin: 0 0 -2.5px -2.5px;
+  border-radius: 50%;
+  background: var(--path-blue);
+  box-shadow:
+    0 0 5px 1px rgba(var(--path-blue-rgb), 0.2),
+    0 0 12px 3px rgba(var(--path-blue-rgb), 0.2);
+  opacity: min(1, calc((1 - var(--rail-p, 0)) * 25));
+}
+.path-tip path {
+  stroke: var(--folio-blue);
+  stroke-width: 1;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+}
+@media (max-width: 760px) {
+  .path-rail {
+    top: 75px;
+  }
+}
