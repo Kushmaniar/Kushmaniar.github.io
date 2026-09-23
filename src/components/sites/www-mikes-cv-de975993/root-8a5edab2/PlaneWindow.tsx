@@ -62,6 +62,8 @@ function Layer({
   transform?: string;
 }) {
   return (
+    // Plain <img>: these are hand-registered art layers, not content images.
+    // eslint-disable-next-line @next/next/no-img-element
     <img
       src={src}
       alt=""
@@ -77,12 +79,14 @@ function Layer({
 function StaticClouds() {
   const cloud = "pointer-events-none absolute h-auto max-w-none";
   return (
+    /* eslint-disable @next/next/no-img-element -- positioned sprite layers */
     <>
       <img src={CLOUD_SRC} alt="" aria-hidden="true" draggable={false} className={`${cloud} top-[34%] left-[-30%] w-[105%] opacity-70`} />
       <img src={CLOUD_SRC} alt="" aria-hidden="true" draggable={false} className={`${cloud} top-[30%] left-[30%] w-full opacity-60`} />
       <img src={CLOUD_SRC} alt="" aria-hidden="true" draggable={false} className={`${cloud} top-[46%] left-[-15%] w-[135%] opacity-95`} />
       <div className="absolute inset-[64%_0_0_0] bg-[linear-gradient(to_bottom,rgba(255,255,255,0)_0%,#FFFFFF_70%)]" />
     </>
+    /* eslint-enable @next/next/no-img-element */
   );
 }
 
