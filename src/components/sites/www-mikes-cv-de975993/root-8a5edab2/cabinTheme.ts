@@ -6,8 +6,17 @@ import { CABIN_DARK_KEY, asset } from "./config";
 let isDark = typeof document !== "undefined" && document.documentElement.dataset.theme === "dark";
 let veil: HTMLDivElement | null = null;
 let recolourTimer: ReturnType<typeof setTimeout> | undefined;
-let sound: HTMLAudioElement | null = null;
-let soundEnabled = true;
+let clips: HTMLAudioElement[] | null = null;
+
+/**
+ * Sounds layered on the light/dark flip: the original shade slide, plus a
+ * switch click (a local asset, not from the target site) so the toggle reads
+ * as a physical switch being thrown.
+ */
+const SOUNDS = [
+  { path: "/shade-on.m4a", volume: 0.2 },
+  { path: "/flip-switch.mp3", volume: 0.3 },
+];
 
 function ensureVeil() {
   if (!veil) {
@@ -19,29 +28,30 @@ function ensureVeil() {
   return veil;
 }
 
-function getSound() {
-  if (!soundEnabled) return null;
-  if (!sound) {
-    const audio = new Audio(asset("/shade-on.m4a"));
-    audio.preload = "auto";
-    audio.volume = 0.2;
-    audio.addEventListener("error", () => {
-      soundEnabled = false;
-      sound = null;
+function getSounds() {
+  if (!clips) {
+    clips = SOUNDS.map(({ path, volume }) => {
+      const audio = new Audio(asset(path));
+      audio.preload = "auto";
+      audio.volume = volume;
+      audio.addEventListener("error", () => {
+        // Drop just the clip that failed; the rest still play.
+        if (clips) clips = clips.filter((c) => c !== audio);
+      });
+      return audio;
     });
-    sound = audio;
   }
-  return sound;
+  return clips;
 }
 
 function playSound() {
-  try {
-    const audio = getSound();
-    if (!audio) return;
-    audio.currentTime = 0;
-    audio.play()?.catch(() => {});
-  } catch {
-    // Autoplay or decoding refused; the theme still switches silently.
+  for (const audio of getSounds()) {
+    try {
+      audio.currentTime = 0;
+      audio.play()?.catch(() => {});
+    } catch {
+      // Autoplay or decoding refused; the theme still switches silently.
+    }
   }
 }
 
@@ -94,8 +104,8 @@ export function onShadeChange(shade: number, settled: boolean): void {
     if (shade >= 0.999) return commit(true);
     if (shade <= 0.001) return commit(false);
   }
-  // Warm the sound up while the shade is moving so the commit plays promptly.
-  getSound();
+  // Warm the sounds up while the shade is moving so the commit plays promptly.
+  getSounds();
   v.style.transition = "";
   v.style.backgroundColor = veilColour(!isDark);
   v.style.opacity = String(isDark ? 1 - shade : shade);
