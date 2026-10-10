@@ -197,6 +197,7 @@ export const TIMELINE: TimelineEntryData[] = [
     desc: "A paper-based instrument using computer-vision pose estimation to synthesize 8 chords at 0.014s latency and 0.883 accuracy.",
     cases: [],
     category: "project",
+    paperHref: "https://doi.org/10.1201/9781779643421-12",
   },
   {
     year: "2023",
