@@ -11,19 +11,19 @@ const THEME_SCRIPT = `try{if(localStorage.getItem('mikescv-cabin-dark')==='1'){d
 export const metadata: Metadata = {
   metadataBase: new URL("https://kushmaniar.me"),
   title: "Kush Maniar",
-  description: "AI/ML engineer and MSc Artificial Intelligence candidate based in Singapore",
+  description: "AI engineer who ships agents, computer vision and NLP into production. MSc AI at NTU Singapore.",
   robots: { index: true, follow: true },
   icons: { icon: { url: `${SITE_ASSETS}/seo/favicon.svg`, type: "image/svg+xml" } },
   openGraph: {
     title: "Kush Maniar",
-    description: "AI/ML engineer and MSc Artificial Intelligence candidate based in Singapore",
+    description: "AI engineer who ships agents, computer vision and NLP into production. MSc AI at NTU Singapore.",
     type: "website",
     images: [{ url: `${SITE_ASSETS}/seo/og-image.jpg`, width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Kush Maniar",
-    description: "AI/ML engineer and MSc Artificial Intelligence candidate based in Singapore",
+    description: "AI engineer who ships agents, computer vision and NLP into production. MSc AI at NTU Singapore.",
     images: [`${SITE_ASSETS}/seo/og-image.jpg`],
   },
 };
