@@ -9,20 +9,21 @@ const SITE_ASSETS = "/sites/www-mikes-cv-de975993/root-8a5edab2";
 const THEME_SCRIPT = `try{if(localStorage.getItem('mikescv-cabin-dark')==='1'){document.documentElement.dataset.theme='dark'}}catch(e){}`;
 
 export const metadata: Metadata = {
-  title: "Mike Barton",
-  description: "Multidisciplinary software designer based in Manchester, UK",
-  robots: { index: false },
+  metadataBase: new URL("https://kushmaniar.me"),
+  title: "Kush Maniar",
+  description: "AI/ML engineer and MSc Artificial Intelligence candidate based in Singapore",
+  robots: { index: true, follow: true },
   icons: { icon: { url: `${SITE_ASSETS}/seo/favicon.svg`, type: "image/svg+xml" } },
   openGraph: {
-    title: "Mike Barton",
-    description: "Multidisciplinary software designer based in Manchester, UK",
+    title: "Kush Maniar",
+    description: "AI/ML engineer and MSc Artificial Intelligence candidate based in Singapore",
     type: "website",
     images: [{ url: `${SITE_ASSETS}/seo/og-image.jpg`, width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Mike Barton",
-    description: "Multidisciplinary software designer based in Manchester, UK",
+    title: "Kush Maniar",
+    description: "AI/ML engineer and MSc Artificial Intelligence candidate based in Singapore",
     images: [`${SITE_ASSETS}/seo/og-image.jpg`],
   },
 };

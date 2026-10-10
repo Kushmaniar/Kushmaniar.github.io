@@ -12,6 +12,16 @@ export interface CaseStudyLink {
   shots: string[];
 }
 
+/** Distinguishes work history from the other things that share the timeline rail. */
+export type TimelineCategory = "work" | "education" | "project" | "award";
+
+/** A second role held at the same company/org, folded under one timeline entry. */
+export interface TimelineSubRole {
+  role: string;
+  period: string;
+  desc?: string;
+}
+
 export interface TimelineEntryData {
   year: string;
   route: string;
@@ -22,6 +32,10 @@ export interface TimelineEntryData {
   role: string;
   desc: string;
   cases: CaseStudyLink[];
+  /** Defaults to "work" when omitted. */
+  category?: TimelineCategory;
+  /** Additional roles at the same entry, newest first, rendered without their own dot. */
+  subRoles?: TimelineSubRole[];
 }
 
 export interface Memory {

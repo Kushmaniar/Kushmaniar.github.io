@@ -3,8 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import { prefersReducedMotion } from "./config";
 
-const LAT = 53.4888;
-const LON = 2.2424;
+const LAT = 1.3521;
+const LON = 103.8198;
 const COUNT_MS = 900;
 const OFFSET_REFRESH_MS = 30 * 60 * 1000;
 
@@ -48,17 +48,20 @@ function useCountUp(target: number, active: boolean) {
   return formatCoord(value, String(Math.floor(Math.abs(target))).length);
 }
 
-/** Current UK offset from GMT, e.g. "GMT+1" in summer, "GMT+0" in winter. */
-function londonOffset() {
+/** Current Singapore offset from GMT — fixed at GMT+8, no DST. */
+function singaporeOffset() {
   try {
     const s =
-      new Intl.DateTimeFormat("en-GB", { timeZone: "Europe/London", timeZoneName: "longOffset" })
+      new Intl.DateTimeFormat("en-GB", {
+        timeZone: "Asia/Singapore",
+        timeZoneName: "longOffset",
+      })
         .formatToParts(new Date())
-        .find((p) => p.type === "timeZoneName")?.value ?? "GMT";
-    const h = parseInt(s.slice(3), 10) || 0;
+        .find((p) => p.type === "timeZoneName")?.value ?? "GMT+8";
+    const h = parseInt(s.slice(3), 10) || 8;
     return `GMT${h < 0 ? "-" : "+"}${Math.abs(h)}`;
   } catch {
-    return "GMT+1";
+    return "GMT+8";
   }
 }
 
@@ -66,10 +69,10 @@ export function FolioSticky({ booting }: { booting: boolean }) {
   const active = !booting;
   const lat = useCountUp(LAT, active);
   const lon = useCountUp(LON, active);
-  const [gmt, setGmt] = useState(londonOffset);
+  const [gmt, setGmt] = useState(singaporeOffset);
 
   useEffect(() => {
-    const id = window.setInterval(() => setGmt(londonOffset()), OFFSET_REFRESH_MS);
+    const id = window.setInterval(() => setGmt(singaporeOffset()), OFFSET_REFRESH_MS);
     return () => window.clearInterval(id);
   }, []);
 
@@ -80,12 +83,12 @@ export function FolioSticky({ booting }: { booting: boolean }) {
         aria-hidden="true"
       />
       <div className="text-center font-folio-mono text-[12px] leading-[1.8] font-medium tracking-[1.84px] whitespace-nowrap text-folio-mute uppercase min-[1220px]:py-[12px] min-[1220px]:text-start">
-        <p className="text-folio-ink">Mike Barton</p>
-        <p>Manchester, UK</p>
+        <p className="text-folio-ink">Kush Maniar</p>
+        <p>Singapore</p>
         <p aria-hidden="true">
-          {lat}° N, {lon}° W
+          {lat}° N, {lon}° E
         </p>
-        <p className="sr-only">53.4888° north, 2.2424° west</p>
+        <p className="sr-only">1.3521° north, 103.8198° east</p>
         <p>{gmt}</p>
       </div>
     </aside>

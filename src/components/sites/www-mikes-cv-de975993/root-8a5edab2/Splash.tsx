@@ -143,12 +143,19 @@ export function Splash({ targets, ready, onDone }: SplashProps) {
               <animate attributeName="x2" values="0;220" dur="2.4s" repeatCount="indefinite" />
             </linearGradient>
             <mask id="splash-mask">
-              <path
+              <text
+                x="50"
+                y="54"
+                textAnchor="middle"
+                dominantBaseline="central"
                 fill="#fff"
-                d="M25.713 59.087C30.905 59.087 35.114 63.297 35.114 68.489 35.114 73.680 30.905 77.890 25.713 77.890 20.521 77.890 16.311 73.680 16.311 68.489 16.311 63.296 20.521 59.087 25.713 59.087Z"
-              />
-              <path fill="#fff" d="M84 22.110V77.890H67.078V22.110H84Z" />
-              <path fill="#fff" d="M63.318 66.922L49.217 77.576 16 22.110H35.428L63.318 66.922Z" />
+                fontFamily="ui-sans-serif, system-ui, sans-serif"
+                fontWeight="700"
+                fontSize="42"
+                letterSpacing="-1"
+              >
+                KM
+              </text>
             </mask>
           </defs>
           <g className="origin-[50px_50px] animate-[splashMarkIn_.62s_var(--ease-out)_both] motion-reduce:animate-[splashMarkIn_.2s_ease_both]">

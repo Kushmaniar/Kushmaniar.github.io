@@ -51,12 +51,12 @@ export function Folio({ ref, booting, onReset }: FolioProps) {
         </div>
         <div className="reveal -mt-[34px] w-full max-w-[460px] text-center [--reveal-delay:60ms] [--reveal-opacity:0.8] min-[1220px]:-mt-[28px]">
           <p className="text-[16px] leading-[1.8] font-medium tracking-[-0.12px] text-folio-ink">
-            Software Designer &amp; Creative Technologist
+            AI/ML Engineer &amp; MSc Artificial Intelligence Candidate
           </p>
           <p className="text-[16px] leading-[1.6] font-normal tracking-[-0.12px] text-folio-body opacity-80">
-            Pushing pixels for 8 years with an engineering mindset,{" "}
+            Two years shipping agentic AI and data platforms in production,{" "}
             <br className="max-[620px]:hidden" />
-            obsessing over the details and the why behind great products.
+            now back in the lab chasing the research behind them.
           </p>
         </div>
         <div
