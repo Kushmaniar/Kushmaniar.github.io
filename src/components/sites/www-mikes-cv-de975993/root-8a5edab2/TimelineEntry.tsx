@@ -59,6 +59,16 @@ export function TimelineEntry({ entry }: { entry: TimelineEntryData }) {
             {entry.desc}
           </p>
         )}
+        {entry.paperHref && (
+          <a
+            className="mt-[4px] inline-flex items-center gap-[5px] font-folio-mono text-[12px] font-medium tracking-[0.6px] text-folio-blue uppercase no-underline hover:underline hover:underline-offset-3"
+            href={entry.paperHref}
+            target="_blank"
+            rel="noreferrer noopener"
+          >
+            View Paper &#8599;
+          </a>
+        )}
       </div>
       {entry.subRoles && entry.subRoles.length > 0 && (
         <div className="mt-[6px] flex flex-col gap-[14px]">

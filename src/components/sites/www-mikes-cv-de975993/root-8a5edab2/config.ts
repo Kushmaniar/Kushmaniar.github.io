@@ -117,6 +117,7 @@ export const TIMELINE: TimelineEntryData[] = [
     desc: "A BART/BERT/GPT-4 pipeline mining 50,000+ commits across 22 GitHub repositories, capturing 88% of features at 0.85–0.87 F1.",
     cases: [],
     category: "project",
+    paperHref: "https://doi.org/10.52783/jes.7091",
   },
   {
     year: "2024",
@@ -150,17 +151,19 @@ export const TIMELINE: TimelineEntryData[] = [
     desc: "Deep learning, NLP and an LLM combined for visitor recognition — a Siamese CNN reaching 98.2% precision, paired with a 0–100 trust score at MAE 4.88.",
     cases: [],
     category: "project",
+    paperHref: "https://doi.org/10.1007/978-3-032-25490-0_38",
   },
   {
     year: "2023",
     route: "—",
     logos: [],
-    company: "Springer LNNS",
+    company: "Springer LNEE",
     href: "#",
     role: "PoseNet + DTW VR Scoring",
     desc: "Integrated PoseNet with Dynamic Time Warping and cosine similarity in a Unity VR game, reaching 99.76% maximum scoring accuracy.",
     cases: [],
     category: "project",
+    paperHref: "https://doi.org/10.1007/978-981-99-5974-7_56",
   },
   {
     year: "2023",

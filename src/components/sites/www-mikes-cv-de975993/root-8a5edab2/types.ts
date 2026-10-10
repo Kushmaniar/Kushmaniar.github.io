@@ -36,6 +36,8 @@ export interface TimelineEntryData {
   category?: TimelineCategory;
   /** Additional roles at the same entry, newest first, rendered without their own dot. */
   subRoles?: TimelineSubRole[];
+  /** DOI or direct link to a published paper. */
+  paperHref?: string;
 }
 
 export interface Memory {
