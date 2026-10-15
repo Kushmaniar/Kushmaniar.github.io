@@ -96,18 +96,6 @@ export const TIMELINE: TimelineEntryData[] = [
     category: "education",
   },
   {
-    // Placeholder: exact start/end dates to confirm.
-    year: "2025",
-    route: "SIN",
-    logos: [],
-    company: "Drilldown",
-    href: "https://drilldown.online/",
-    role: "AI/ML Engineer",
-    desc: "Ran conversational AI and demand-forecasting for a restaurant-tech company. The kind of problem where a wrong prediction means a walk-in freezer full of wasted produce.",
-    cases: [],
-    category: "work",
-  },
-  {
     year: "2025",
     route: "—",
     logos: [],
@@ -152,6 +140,18 @@ export const TIMELINE: TimelineEntryData[] = [
     cases: [],
     category: "project",
     paperHref: "https://doi.org/10.1007/978-3-032-25490-0_38",
+  },
+  {
+    // May – Aug 2023
+    year: "2023",
+    route: "SIN",
+    logos: [],
+    company: "Drilldown",
+    href: "https://drilldown.online/",
+    role: "AI/ML Engineer",
+    desc: "Ran conversational AI and demand-forecasting for a restaurant-tech company. The kind of problem where a wrong prediction means a walk-in freezer full of wasted produce.",
+    cases: [],
+    category: "work",
   },
   {
     year: "2023",
